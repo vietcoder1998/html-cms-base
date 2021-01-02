@@ -35,6 +35,8 @@ createConnection({
     
 }).then(async connection => {
     // here you can start to work with your entities
+    console.log("connect db")
+    // await connection.close();
 }).catch(error => console.log(error));
 
 const app = express()
@@ -50,4 +52,8 @@ app.get('/', (req, res) => {
 })
 app.listen(host, () => { 
     console.log(`server running in ${host}`) 
+})
+
+app.on("close", ()=> {
+    
 })

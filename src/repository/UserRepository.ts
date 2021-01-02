@@ -35,15 +35,25 @@ export function removeUser(id?: string) {
 }
 //TODO: get user
 export function getUser(id?: string) {
-    let userEntity = new UserEntity()
     return getManager().findOne(UserEntity, id)
 }
 //TODO: get users
-export function getUsers(ids?: string[]){
-    return
+export function getManyUser(ids?: string[]){
+    console.log(ids)
+    return getManager().findByIds(UserEntity, ids)
 }
 
-//TODO: banner user
+//TODO: ban user
+export function banUser(id?: string) {
+    let userEntity = new UserEntity()
+    getManager().findOne(UserEntity, id).then(res => {
+        if (res) {
+            userEntity = res
+        }
+    })
+
+    return userEntity
+}
 
 
 //TODO: create accesstoken
