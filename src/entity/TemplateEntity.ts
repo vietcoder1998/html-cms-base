@@ -2,10 +2,10 @@ import { profileEnd } from 'console';
 import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from 'typeorm';
 import { ProfileEntity } from './ProfileEntity';
 
-@Entity()
+@Entity({name: 'template'})
 export class TemplateEntity  {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
 
     @Column({
         type: "nvarchar",

@@ -1,22 +1,19 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable} from "typeorm";
 import { TemplateEntity } from "./TemplateEntity";
 
-@Entity()
+@Entity({name: 'profile'})
 export class ProfileEntity {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
 
-    @Column()
+    @Column('text', {nullable: true})
     name: string;
 
-    @Column()
+    @Column('text', {nullable: true})
     gmail: string;
 
-    @Column()
-    access_token: string;
-
     @ManyToMany(()=>TemplateEntity)
-    @JoinTable()
+    @JoinTable({name: 'profile_template'})
     templateEntity: TemplateEntity
 }

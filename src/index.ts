@@ -1,22 +1,34 @@
 import 'reflect-metadata';
 import express from 'express'
 import bodyParser from 'body-parser'
-import { router } from './controller/PhotoController';
+import photoController from './controller/PhotoController';
 import {createConnection} from "typeorm";
 import dotenv from 'dotenv';
 import { PhotoEntity } from './entity/PhotoEntity';
+import { UserEntity } from './entity/UserEntity';
+import { ProfileEntity } from './entity/ProfileEntity';
+import { TemplateEntity } from './entity/TemplateEntity';
+import pug from 'pug';
+import path from 'path';
+import userController from './controller/UserController';
 
-const env = dotenv.config() 
+dotenv.config() 
+const host = process.env.HOST
+// const prvkey = process.env.JWT_PRIVATE_KEY
+// prvkey.replace(/\\n/gm, '\n')
 
 createConnection({
     type: "mysql",
     host: "localhost",
     port: 3306,
     username: "root",
-    password: "123456",
-    database: "tuyensinh",
+    password: process.env.SQL_PW,
+    database: "html_css_base",
     entities: [
-        PhotoEntity
+        PhotoEntity,
+        UserEntity,
+        ProfileEntity,
+        TemplateEntity
     ],
     synchronize: true,
     logging: false,
@@ -27,8 +39,15 @@ createConnection({
 
 const app = express()
 app.use(bodyParser.json())
-app.use("/api", router )
+app.use("/user", userController )
+app.use("/photo", photoController)
+app.set("view engine", pug)
+app.set('views', path.join(__dirname, 'views'));
 
-app.listen(3000, () => { 
-    console.log("server running in 3000") 
+// set index
+app.get('/', (req, res) => {
+    res.render('./views/index.pug')
+})
+app.listen(host, () => { 
+    console.log(`server running in ${host}`) 
 })

@@ -1,8 +1,8 @@
 
-//TODO: getTemplate
+//TODO: getTemplate router
 
-//TODO: updateTemplate
+//TODO: updateTemplate router
 
-//TODO: removeTemplate
+//TODO: removeTemplate router
 
-//TODO: createTemplate
+//TODO: createTemplate router

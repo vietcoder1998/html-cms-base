@@ -1,11 +1,10 @@
-import { profileEnd } from 'console';
 import {Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn} from 'typeorm';
 import { ProfileEntity } from './ProfileEntity';
 
-@Entity()
+@Entity({name: 'user'})
 export class UserEntity  {
     @PrimaryGeneratedColumn()
-    id: number;
+    id: string;
 
     @Column({
         type: "text",
@@ -18,6 +17,9 @@ export class UserEntity  {
 
     @Column("text",{nullable: true})
     access_token: string;
+
+    @Column("bigint",{nullable: true})
+    created_date: number;
 
     @OneToOne(() => ProfileEntity)
     @JoinColumn()
