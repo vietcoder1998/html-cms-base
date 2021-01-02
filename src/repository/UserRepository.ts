@@ -5,6 +5,7 @@ import { getManager } from "typeorm";
 import { ConfigException } from "../config/exception";
 import { CODE, MSG } from "../config/const";
 import ConfigResoponse from "../config/response";
+import { type } from "os";
 
 //TODO: create user
 export async function createUser(userModel?: UserModel) {
@@ -23,11 +24,14 @@ export async function createUser(userModel?: UserModel) {
         userEntity.password = userModel.password;
         let created_date = new Date().getTime()
         userEntity.created_date = created_date
-        userEntity.access_token = createAcessToken(
+
+        let jwt = await createAcessToken(
             userModel.username,
             userModel.password,
             created_date
         )
+
+        userEntity.access_token = jwt;
 
         await getManager().save(UserEntity, userEntity)
         return ConfigResoponse(
@@ -35,38 +39,64 @@ export async function createUser(userModel?: UserModel) {
             MSG.SUCCESS,
         )
     }
-
 }
-//TODO: update user
-export async function updateUser(userModel?: UserModel, id?: string) {
-    let userEntity = new UserEntity()
-    let condition = getManager().findOne(UserEntity, id);
-    if (!condition) {
+//TODO: update user password
+export async function updateUserPassword(newpassword?: string, id?: string) {
+    let userEntity = await getManager().findOne(UserEntity, id);
+
+    if (!userEntity) {
         return ConfigException(
             CODE.ERR,
             MSG.USER_ERR.NOT_FOUND
-            
         )
     } else {
-        if (userModel.username) {
-            userEntity.username = userModel.username
-        }
+        userEntity.password = newpassword
 
-        if (userModel.password) {
-            userEntity.password = userModel.password
-        }
-
-        await getManager().update(UserEntity, id, userEntity)
-        return ConfigResoponse(
-            CODE.SUCCESS,
-            MSG.SUCCESS,
+        let jwt = await createAcessToken(
+            userEntity.username,
+            userEntity.password,
+            userEntity.created_date
         )
+
+        userEntity.access_token = jwt;
+
+        let data = await getManager().update(UserEntity, id, userEntity);
+        if (data && data.affected > 0) {
+            return ConfigResoponse(
+                CODE.SUCCESS,
+                MSG.SUCCESS,
+            )
+        } else {
+            return ConfigResoponse(
+                CODE.USER_ERR.NOT_FOUND,
+                MSG.USER_ERR.NOT_FOUND,
+            )
+        }
     }
 }
 
 //TODO: remove user
-export async function removeUser(id?: string) {
-    return getManager().delete(UserEntity, id)
+export async function removeUser(ids?: string[]) {
+    if (!ids) {
+        return ConfigException(
+            CODE.USER_ERR.NOT_FOUND,
+            MSG.USER_ERR.NOT_FOUND,
+        )
+    } else {
+        let data = await getManager().delete(UserEntity, ids)
+
+        if (data && data.affected > 0) {
+            return ConfigResoponse(
+                CODE.SUCCESS,
+                MSG.SUCCESS
+            )
+        } else {
+            return ConfigException(
+                CODE.USER_ERR.NOT_FOUND,
+                MSG.USER_ERR.NOT_FOUND
+            )
+        }
+    }
 }
 //TODO: get user
 export async function getUser(id?: string) {
@@ -93,14 +123,13 @@ export async function getUser(id?: string) {
 }
 //TODO: get many users
 export async function getManyUser(ids?: string[]) {
-    if (!ids||ids.length ===0) {
+    if (!ids || ids.length === 0) {
         return ConfigException(
             CODE.ERR,
             MSG.USER_ERR.NOT_FOUND,
         )
     } else {
         let data = await getManager().findByIds(UserEntity, ids)
-        console.log(data)
         if (!data) {
             return ConfigException(
                 CODE.USER_ERR.NOT_FOUND,
@@ -129,14 +158,13 @@ export function banUser(id?: string) {
 }
 
 //TODO: create accesstoken
-export function createAcessToken(username?: string, password?: string, created_date?: number): string {
-    var actoken = "abc";
-    jwt.sign({ foo: username + password + created_date }, 'ok', { algorithm: 'RS256' }, (err, token) => {
-        console.log(token);
-        if (token) {
-            actoken = token
-        }
-    })
-
-    return actoken;
+export async function createAcessToken(username?: string, password?: string, created_date?: number | string) {
+    if (typeof created_date === "number") {
+        created_date = created_date.toString()
+    }
+    return await jwt.sign({
+        username,
+        password,
+        created_date,
+    }, created_date)
 }

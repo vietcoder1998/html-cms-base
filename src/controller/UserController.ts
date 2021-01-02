@@ -1,5 +1,5 @@
 import express from 'express';
-import { createUser, getUser, getManyUser } from '../repository/UserRepository';
+import { createUser, getUser, getManyUser, removeUser, updateUserPassword } from '../repository/UserRepository';
 import { UserModel } from '../model/UserModel'
 
 const userController = express.Router();
@@ -8,9 +8,16 @@ const userController = express.Router();
 
 //TODO: updateAccessToken
 
-//TODO: updateUserInfo
+//TODO: update user
+userController.post("/:id", (req: express.Request, res: express.Response) => {
+    let newpassword = req.body.newpassword
+    let id = req.params.id
+    updateUserPassword(newpassword, id).then(data => {
+        res.send(data)
+    })
+})
 
-//TODO: createUser
+//TODO: create user
 userController.post("/create", (req: express.Request, res: express.Response) => {
     let userModel: UserModel = {
         username: req.body.username,
@@ -33,6 +40,11 @@ userController.post("/list", (req: express.Request, res: express.Response) => {
 })
 
 //TODO: removeUser
+userController.delete("/list", (req: express.Request, res: express.Response) => {
+    let ids = req.body.ids;
+    removeUser(ids).then(data => {res.send(data)})
+})
+
 
 //TODO: banUser
 
