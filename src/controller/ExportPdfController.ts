@@ -29,7 +29,8 @@ exportPdfController.post("/create", (req: express.Request, res: express.Response
     }
 
     saveExportPdf(model).then(data => {
-        res.send(data)
+        console.log(data)
+        res.download(data.filename)
     })
 })
 
