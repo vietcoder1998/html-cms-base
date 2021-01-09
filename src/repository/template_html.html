@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    :root {
+      --main-color: #03a9f4;
+      --sub-color: #009ce2;
+    }
+
+    .header {
+      background-color: var(--main-color)
+    }
+
+    h1 {
+      color: white;
+      text-align: center;
+    }
+
+    p {
+      font-family: verdana;
+      font-size: 20px;
+    }
+
+    .text-white {
+      color: white;
+    }
+
+    @font-face {
+      font-family: RobotoCondensed;
+      src: url('./RobotoCondensed-Regular.ttf');
+    }
+
+    body {
+      margin: 0;
+      font-family: RobotoCondensed;
+    }
+
+    .body {
+      padding: 20px;
+    }
+
+    /* .info-first {
+      border-top: 1px solid #03a9f4;
+      border-bottom: 1px solid #03a9f4;
+      padding: 15px 0;
+    } */
+    .info {
+      border-bottom: 1px solid var(--main-color);
+      /* padding: 15px 0; */
+    }
+
+    .rowInfo {
+      flex: 1;
+      display: flex;
+      flex-direction: row
+    }
+
+    .fa {
+      margin-right: 15px
+    }
+
+    .info-row {
+      margin-bottom: 10px
+    }
+
+    .icon-info {
+      width: 25px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .block-left {
+      flex: 5;
+      padding: 15px 0;
+    }
+
+    .title-info {
+      font-weight: bold;
+      color: var(--sub-color);
+    }
+
+    .sub-title {
+      color: var(--sub-color);
+    }
+
+    #experience {
+      /* white-space: break-spaces; */
+    }
+
+    .experience-body {
+      white-space: break-spaces;
+    }
+
+    .block-right {
+      flex: 16;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding: 15px 0;
+    }
+
+    .block-center {
+      flex: 1
+    }
+
+    .experience-date {
+      margin-top: 5px
+    }
+
+    .experience-body {
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .wapper-line {
+      display: flex;
+      flex: 1
+    }
+
+    .tag-ability {
+      background-color: #29b5e3;
+      padding: 5px 15px;
+      color: whitesmoke;
+      border-radius: 15px;
+      line-height: 2;
+      white-space: nowrap;
+    }
+    #skills {
+
+    }
+    .languageSkillPading {
+      padding: 5px 0;
+    }
+  </style>
+
+  <!-- <script src="https://es6-promise.auto.min.js"></script>
+  <script src="jspdf.min.js"></script>
+  <script src="html2canvas.min.js"></script>
+  <script src="html2pdf.min.js"></script> -->
+</head>
+
+<body id="body">
+  <div class="header" style="padding: 20px; display: flex; flex-direction: row; justify-content: space-between;">
+    <div id="profile" style="display: flex; align-items: center">
+      <img id="image"
+        src="https://upload.wikimedia.org/wikipedia/vi/1/1d/N%C6%A1i_n%C3%A0y_c%C3%B3_anh_-_Single_Cover.jpg"
+        alt="avatar" style="height: 15vw">
+      <div style="padding-left: 15px">
+        <div id="name" class="text-white"></div>
+        <!-- <div id="job-name" class="text-white">NHÂN VIÊN KIỂM THỬ</div> -->
+      </div>
+    </div>
+    <!-- <img src="https://upload.wikimedia.org/wikipedia/vi/1/1d/N%C6%A1i_n%C3%A0y_c%C3%B3_anh_-_Single_Cover.jpg"
+      alt="logo" style="height: 100px"> -->
+  </div>
+  <div class="body">
+    <div style="display: flex; flex: 1">
+      <div style="flex: 5" class="info title-info">THÔNG TIN CÁ NHÂN</div>
+      <div style="flex: 1"></div>
+      <div style="flex: 16" class="info">
+        <div class="info-row" style="display: flex">
+          <div class="info-col-1 rowInfo">
+            <div class="icon-info">
+              <i class="fa fa-birthday-cake" aria-hidden="true"></i>
+            </div>
+            <div id="birthday"></div>
+          </div>
+          <div class="info-col-2 rowInfo">
+            <div class="icon-info">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div id="gender">Nữ</div>
+          </div>
+        </div>
+        <div class="info-row" style="display: flex">
+          <div class="info-col-1 rowInfo">
+            <div class="icon-info">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+            </div>
+
+
+            <div id="phone">0987654321</div>
+          </div>
+          <div class="info-col-2 rowInfo">
+            <div class="icon-info">
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+            </div>
+
+            <div id="email">chiennv97@gmail.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; flex: 1">
+      <div style="flex: 5; padding: 15px 0;" class="info title-info">MỤC TIÊU NGHỀ NGHIỆP</div>
+      <div style="flex: 1"></div>
+      <div class="info block-right" id="description">
+      </div>
+    </div>
+    <div>
+      <div style="display: flex; flex: 1">
+        <div style="flex: 5; margin-top: 15px" class="title-info">KINH NGHIỆM</div>
+      </div>
+      <div id="experience">
+      </div>
+    </div>
+    <div>
+      <div style="display: flex; flex: 1">
+        <div style="flex: 5; margin-top: 15px" class="title-info">HỌC VẤN</div>
+      </div>
+      <div id="school">
+      </div>
+    </div>
+    <div style="display: flex; flex: 1">
+      <div style="flex: 5; padding: 15px 0;" id="languageSkill">
+          <div class="title-info">CHỨNG CHỈ</div>
+      </div>
+      <div style="flex: 1"></div>
+      <div class="block-right">
+          <div class="title-info">KỸ NĂNG</div>
+          <div id="skills">
+            <!-- <label class='tag-ability'>Quan sát, phân tích</label>
+            <label class='tag-ability'>Quan sát, phân tích</label>
+            <label class='tag-ability'>Q</label> -->
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

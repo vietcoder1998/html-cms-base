@@ -11,6 +11,8 @@ import { TemplateEntity } from './entity/TemplateEntity';
 import pug from 'pug';
 import path from 'path';
 import userController from './controller/UserController';
+import { ExportPdfEntity } from './entity/ExportPdfEntity';
+import exportPdfController from './controller/ExportPdfController';
 
 dotenv.config() 
 const host = process.env.HOST
@@ -28,7 +30,8 @@ createConnection({
         PhotoEntity,
         UserEntity,
         ProfileEntity,
-        TemplateEntity
+        TemplateEntity,
+        ExportPdfEntity,
     ],
     synchronize: true,
     logging: false,
@@ -41,19 +44,21 @@ createConnection({
 
 const app = express()
 app.use(bodyParser.json())
-app.use("/user", userController )
-app.use("/photo", photoController)
+// app.use("/user", userController )
+// app.use("/photo", photoController)
+app.use("/export-pdf", exportPdfController)
 app.set("view engine", pug)
 app.set('views', path.join(__dirname, 'views'));
 
 // set index
-app.get('/', (req, res) => {
-    res.render('./views/index.pug')
-})
+app.get('/', function(req, res) {
+    
+});
+
 app.listen(host, () => { 
     console.log(`server running in ${host}`) 
 })
 
 app.on("close", ()=> {
-    
+    console.log(`close pdf ${host}`) 
 })
