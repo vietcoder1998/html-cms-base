@@ -15,6 +15,8 @@ import { ProductTypeEntity } from './entity/ProductTypeEntity';
 import { ProductEntity } from './entity/ProductEntity';
 import productController from './controller/ProductController';
 import productTypeController from './controller/ProductTypeController';
+import { ExportPdfEntity } from './entity/ExportPdfEntity';
+import exportPdfController from './controller/ExportPdfController';
 
 dotenv.config() 
 const host = process.env.HOST
@@ -34,7 +36,8 @@ createConnection({
         ProfileEntity,
         TemplateEntity,
         ProductTypeEntity,
-        ProductEntity
+        ProductEntity,
+        ExportPdfEntity
     ],
     synchronize: true,
     logging: false,
@@ -52,17 +55,21 @@ app.use("/photo", photoController)
 app.use("/product", productController)
 app.use("/product-type", productTypeController)
 
+// app.use("/user", userController )
+// app.use("/photo", photoController)
+app.use("/export-pdf", exportPdfController)
 app.set("view engine", pug)
 app.set('views', path.join(__dirname, 'views'));
 
 // set index
-app.get('/', (req, res) => {
-    res.render('./views/index.pug')
-})
+app.get('/', function(req, res) {
+    
+});
+
 app.listen(host, () => { 
     console.log(`server running in ${host}`) 
 })
 
 app.on("close", ()=> {
-    
+    console.log(`close pdf ${host}`) 
 })

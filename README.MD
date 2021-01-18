@@ -8,13 +8,11 @@ TÀI LIỆU CHO HỆ THỐNG QUẢN TRỊ HTML-CSS CỦA TEAMPLATE NHÀ TRƯỜN
 ==> Cần có cms để xử lý đơn giản các trang của nhà trường.
 
 2. Xử lý bài toán.
-
 	- yêu cầu 1: Tạo ra một cms quản lý data chung của hệ thống giúp quản lý thông số của các teamplate	
 	- yêu cầu 2: CMS có thể tích hợp và quản dữ liệu luồng.
 	- yêu cầu 3: tự render ra build/ để đẩy lên trang trường.
 	
 3. Hệ thống:
-
 	- server: node.
 	- database: mysql. 
 	- client: reactjs.
