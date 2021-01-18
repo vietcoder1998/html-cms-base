@@ -1,5 +1,5 @@
-import { UserEntity } from "../entity/UserEntity";
-import { UserModel } from "../model/UserModel";
+import {UserEntity } from "../entity/UserEntity";
+import {UserModel } from "../model/UserModel";
 import jwt from 'jsonwebtoken';
 import { getManager } from "typeorm";
 import { ConfigException } from "../config/exception";
@@ -8,11 +8,13 @@ import ConfigResoponse from "../config/response";
 import { type } from "os";
 
 //TODO: create user
-export async function createUser(userModel?: UserModel) {
+export async function createUser(userModel?:UserModel) {
     let userEntity = new UserEntity();
     let condition = await getManager().find(UserEntity, {
         where: { 'username': userModel.username },
     })
+
+    console.log(condition)
 
     if (condition && condition.length > 0) {
         return ConfigException(

@@ -11,6 +11,10 @@ import { TemplateEntity } from './entity/TemplateEntity';
 import pug from 'pug';
 import path from 'path';
 import userController from './controller/UserController';
+import { ProductTypeEntity } from './entity/ProductTypeEntity';
+import { ProductEntity } from './entity/ProductEntity';
+import productController from './controller/ProductController';
+import productTypeController from './controller/ProductTypeController';
 
 dotenv.config() 
 const host = process.env.HOST
@@ -28,7 +32,9 @@ createConnection({
         PhotoEntity,
         UserEntity,
         ProfileEntity,
-        TemplateEntity
+        TemplateEntity,
+        ProductTypeEntity,
+        ProductEntity
     ],
     synchronize: true,
     logging: false,
@@ -43,6 +49,9 @@ const app = express()
 app.use(bodyParser.json())
 app.use("/user", userController )
 app.use("/photo", photoController)
+app.use("/product", productController)
+app.use("/product-type", productTypeController)
+
 app.set("view engine", pug)
 app.set('views', path.join(__dirname, 'views'));
 

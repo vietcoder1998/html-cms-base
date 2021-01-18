@@ -9,10 +9,10 @@ const userController = express.Router();
 //TODO: updateAccessToken
 
 //TODO: update user
-userController.post("/:id", (req: express.Request, res: express.Response) => {
+userController.post("/:id/update", (req: express.Request, res: express.Response) => {
     let newpassword = req.body.newpassword
     let id = req.params.id
-    updateUserPassword(newpassword, id).then(data => {
+    updateUserPassword(newpassword, id).then((data: any) => {
         res.send(data)
     })
 })
@@ -23,26 +23,26 @@ userController.post("/create", (req: express.Request, res: express.Response) => 
         username: req.body.username,
         password: req.body.password,
     };
-    createUser(userModel).then(data => res.send(data))
+    createUser(userModel).then((data: any) => res.send(data))
 })
 
 //TODO: get user
 userController.get("/:id", (req: express.Request, res: express.Response) => {
     let params = req.params
-    getUser(params.id).then(data => {
+    getUser(params.id).then((data: any) => {
         res.send(data)
     })
 })
 //TODO: get many user
 userController.post("/list", (req: express.Request, res: express.Response) => {
     let ids = req.body.ids;
-    getManyUser(ids).then(data => {res.send(data)})
+    getManyUser(ids).then((data: any) => {res.send(data)})
 })
 
 //TODO: removeUser
 userController.delete("/list", (req: express.Request, res: express.Response) => {
     let ids = req.body.ids;
-    removeUser(ids).then(data => {res.send(data)})
+    removeUser(ids).then((data: any) => {res.send(data)})
 })
 
 
